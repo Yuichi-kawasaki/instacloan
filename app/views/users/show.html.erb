@@ -1,0 +1,16 @@
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Face:</strong>
+  <%= image_tag(@user.face.url) %>
+</p>
+
+<%= link_to 'Back', users_path %>
