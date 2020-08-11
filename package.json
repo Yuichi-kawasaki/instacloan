@@ -1,5 +1,13 @@
 {
   "name": "instacloan",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap": "^4.5.2",
+    "jquery": "^3.5.1"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Yuichi-kawasaki/instacloan.git",
+  "author": "yuichi kawasaki <jiv.yu1.kawasaki@gmail.com>",
+  "license": "MIT"
 }

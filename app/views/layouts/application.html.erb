@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Instacloan</title>
+    <title>Onstgram</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <%= yield %>
+
+
+    <header>
+      <div class="header">
+        <h1>Onstgram</h1>
+          <button type="button" class="btn btn-default"><%= link_to "投稿一覧", pictures_path %></button>
+          <% if logged_in? %>
+            <button type="button" class="btn btn-default"><%= link_to "プロフィール", user_path(current_user.id) %></button>
+            <button type="button" class="btn btn-default"><%= link_to "ログアウト", session_path(current_user.id), method: :delete %></button>
+          <% else %>
+            <button type="button" class="btn btn-default"><%= link_to "新規登録", new_user_path %></button>
+            <button type="button" class="btn btn-default"><%= link_to "ログイン", new_session_path %></button>
+          <% end %>
+          <% if current_user.present? %>
+            <button type="button" class="btn btn-default"><%= link_to "お気に入り一覧", star_users_path %></button>
+            <button type="button" class="btn btn-default"><%= link_to '新規投稿', new_picture_path %></button>
+          <% end %>
+      </div>
+    </header>
+    <div class="content">
+      <p id="notice"><%= notice %></p>
+      <%= yield %>
+    </div>
+
   </body>
 </html>
