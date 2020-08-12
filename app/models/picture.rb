@@ -1,5 +1,6 @@
 class Picture < ApplicationRecord
   mount_uploader :image, ImageUploader
+  mount_uploader :picture, PictureUploader
   belongs_to :user
   validates :image_or_content, presence: true
   attr_accessor :action_required
