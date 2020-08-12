@@ -1,16 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update]
-
-  def index
-    @users = User.all
-  end
-
-  def star
-    @pictures = current_user.favorite_pictures
-  end
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def show
-    @user = User.find(params[:id])
   end
 
   def new
@@ -21,31 +12,28 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    if params[:back]
-      render :new
-    else
+      @user = User.new(user_params)
       if @user.save
-        redirect_to users_path, notice: 'ユーザーを登録しました。'
+        redirect_to user_path(@user.id), notice: "アカウント作成しました"
       else
-        render :new
+        render :new if @user.invalid?
       end
-    end
   end
 
   def update
-    if @user.id == current_user.id
-      if @user.update(user_params)
-        redirect_to @user, notice: '編集しました！'
-      else
-        render :edit
-      end
+    if @user.update(user_params)
+      redirect_to user_path(@user.id), notice: "投稿を編集しました！"
+    else
+      render :edit
     end
   end
 
+  def destroy
+    @picture.destroy
+    redirect_to pictures_path, notice:"投稿を削除しました！"
+  end
+
   def confirm
-    @user = User.new(user_params)
-    render :new if @user.invalid?
   end
 
   private
@@ -54,6 +42,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :face, :face_cache, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password,:birthday, :gender,
+                                 :password_confirmation)
   end
 end

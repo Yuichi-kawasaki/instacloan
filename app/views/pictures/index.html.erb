@@ -1,20 +1,50 @@
-<div class="onstgram">
-  <% @pictures.each do |picture| %>
-    <article class="picture">
-      <p>タイトル:<%= picture.title %></p>
-      <%= picture.content %>
-      <br>
-      <%= image_tag(picture.image.url) %>
-      <br>
-      <%= picture.user.name %>
-      <br>
-      <% if logged_in? %>
-        <%= link_to '詳細', picture %>
-        <% if picture.user.id == current_user.id %>
-          <%= link_to '編集', edit_picture_path(picture) %>
-          <%= link_to '削除', picture, method: :delete, data: { confirm: '本当に削除していいですか' } %>
-        <% end %>
+<% flash.each do |key, value| %>
+  <div class="alert <%= bootstrap_class_for(key) %>" ><%= value %></div>
+<% end %>
+<div class="top-image">
+
+  <h2><%= current_user.name %>のページ</h2>
+</div>
+
+<div class="timeline">
+
+
+  <article class="posts">
+    <div class="link_to_new">
+      <%= link_to new_picture_path, method: :get do %>
+        <i class="fa fa-plus">新しく投稿する</i>
       <% end %>
-    </article>
-  <% end %>
+    </div>
+
+      <% @pictures.each do |picture| %>
+      <div class="post_content">
+        <div class="picture_name">
+          <% if picture.user.image.present? %>
+            <%= image_tag(picture.user.image.url, :size => "50x50") %>
+          <% else %>
+             <%= image_tag("default.png", :size => "50x50") %>
+          <% end %>
+          <span class="user_name"><%= picture.user.name %></span>
+          <span class="created_time"><%= picture.created_at %></span>
+        </div>
+        <div class="picture_content"><%= picture.content %></div>
+        <div class="picture_image">
+          <% if picture.image? %>
+            <%= image_tag picture.image.url%>
+          <% end %>
+        </div>
+
+      <div class="post_nav">
+        <%= link_to '新規投稿', new_picture_path(picture.id), method: :get %>
+
+        <%= link_to '写真投稿の編集', edit_picture_path(picture.id), method: :get  %>
+
+
+        <%= link_to '写真投稿の消去', picture_path(picture), method: :delete, data: { confirm: '本当に消去しますか?' } %>
+
+
+      </div>
+    </div>
+    <% end %>
+  </article>
 </div>

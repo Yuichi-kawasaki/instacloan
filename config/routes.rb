@@ -1,19 +1,15 @@
 Rails.application.routes.draw do
-  root to: 'users#index'
+  root to:  'sessions#new'
+
   resources :sessions, only: [:new, :create, :destroy]
-  resources :users do
-    collection do
-      post :confirm
-    end
-    collection do
-      get :star
-    end
-  end
+  resources :users, only: [:new, :create, :show, :edit, :update]
+
   resources :pictures do
     collection do
       post :confirm
     end
+    member do
+      patch :confirm
+    end
   end
-  # mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
-  # resources :favorites, only: [:create, :destroy, :index]
 end
