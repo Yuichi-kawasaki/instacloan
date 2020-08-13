@@ -1,11 +1,13 @@
 class PicturesController < ApplicationController
   before_action :set_picture, only: [:show, :edit, :update, :destroy]
+  before_action :block_other_user, only: [:edit, :update, :destroy]
 
   def index
     @pictures = Picture.all
   end
 
   def show
+    @favorite = current_user.favorites.find_by(picture_id: @picture.id)
   end
 
   def new
@@ -21,7 +23,7 @@ class PicturesController < ApplicationController
 
   def create
     @picture = Picture.new(picture_params)
-    @picture.user_id = current_user.id
+    @picture.user_id = current_user.pictures.build(picture_params)
     if params[:back]
       render :new
     else
@@ -48,7 +50,7 @@ class PicturesController < ApplicationController
 
   def confirm
     @picture = Picture.new(picture_params)
-    @picture.user_id = current_user.id
+    @picture.user_id = current_user.pictures.build(picture_params)
     render :new if @picture.invalid?
   end
 
@@ -59,6 +61,11 @@ class PicturesController < ApplicationController
   end
 
   def picture_params
-    params.require(:picture).permit(:content, :image, :image_cache)
+    params.require(:picture).permit(:user_id,:content, :image, :image_cache)
+  end
+  def block_other_user
+    if current_user.id != @picture.user_id
+      redirect_to pictures_path, notice:"投稿者ではありません"
+    end
   end
 end

@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 8 }, on: :create
   has_many :pictures, dependent: :destroy
-
+  has_many :favorites, dependent: :destroy
   mount_uploader :image, IconUploader
 
   def User.digest(string)
