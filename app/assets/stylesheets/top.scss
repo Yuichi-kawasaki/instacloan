@@ -6,7 +6,8 @@ html,body {
 .wrapper {
   height: auto;
   position: relative;
-  padding-bottom: 120px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   width: auto;
 }
 
@@ -107,7 +108,7 @@ header {
   align-items: center;
 }
 
-h1,p {
+h1 {
   margin: 0;
 }
 
@@ -194,10 +195,13 @@ input:focus {
 }
 
 footer {
-  position: absolute;
   bottom: 0;
   width: 100%;
-  min-height: 100px;
+  min-height: 30px;
+}
+footer p{
+  padding:0 20px;
+  margin-bottom: 0;
 }
 
 * {
