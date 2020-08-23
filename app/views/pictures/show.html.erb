@@ -19,8 +19,9 @@
   <% end %>
 <% end %>
 
-
 <div class="submit">
-  <%= link_to '編集する', edit_picture_path(@picture), class:"button" %>
-  <%= link_to '戻る', pictures_path, class:"button" %>
+  <% if @picture.user_id == current_user.id %>
+    <%= link_to '編集する', edit_picture_path(@picture), class:"button" %>
+  <% end %>
+    <%= link_to '戻る', pictures_path, class:"button" %>
 </div>
